@@ -11,6 +11,7 @@ from recipe.serializers import TagSerializer
 
 TAGS_URL = reverse('recipe:tag-list')
 
+
 class PublicTagsApiTests(TestCase):
     """Test the publicly available tags API"""
 
@@ -23,13 +24,14 @@ class PublicTagsApiTests(TestCase):
 
             self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
+
 class PrivateTagsApiTests(TestCase):
     """Test the authorized user tags API"""
 
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-        'test@yonchik.com',
-        'password123'
+            'test@yonchik.com',
+            'password123'
         )
 
         self.client = APIClient()
@@ -69,8 +71,8 @@ class PrivateTagsApiTests(TestCase):
         self.client.post(TAGS_URL, payload)
 
         exists = Tag.objects.filter(
-        user=self.user,
-        name=payload['name']
+            user=self.user,
+            name=payload['name']
         ).exists()
         self.assertTrue(exists)
 
@@ -80,4 +82,3 @@ class PrivateTagsApiTests(TestCase):
         res = self.client.post(TAGS_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-        

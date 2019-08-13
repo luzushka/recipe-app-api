@@ -6,9 +6,10 @@ from core.models import Tag, Ingredient, Recipe
 
 from recipe import serializers
 
+
 class BaseRecipeAttrViewSet(viewsets.GenericViewSet,
-                mixins.ListModelMixin,
-                mixins.CreateModelMixin):
+                            mixins.ListModelMixin,
+                            mixins.CreateModelMixin):
     """Base viewset for user owner recipe attribute"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -27,10 +28,12 @@ class TagViewSet(BaseRecipeAttrViewSet):
     queryset = Tag.objects.all()
     serializer_class = serializers.TagSerializer
 
+
 class IngredientViewSet(BaseRecipeAttrViewSet):
     """Manage ingredients in the database"""
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
+
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """Manage recipes in the database"""
